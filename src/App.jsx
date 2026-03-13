@@ -5,6 +5,7 @@ const API_KEY = import.meta.env.VITE_API_KEY
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [games, setGames] = useState([])
+  const [library, setLibrary] = useState([])
 
   const handleSearch = async () => {
     if (!searchQuery) return
@@ -20,6 +21,16 @@ function App() {
       console.log('Error fetching games:', error)
     }
 
+  }
+
+  const addToLibrary = (game) => {
+    if (library.find(g => g.id === game.id)) {
+      alert('Game already in your library!')
+      return
+    }
+
+    setLibrary([...library, game])
+    console.log('Added to library:', game.name)
   }
 
   return (
@@ -81,13 +92,64 @@ function App() {
                 <h3>{game.name}</h3>
                 <p>Rating: {game.rating} / 5</p>
                 <p>Released: {game.released}</p>
+
+                <button
+                  onClick={() => addToLibrary(game)}
+                  style={{
+                    marginTop: '10px',
+                    padding: '8px 16px',
+                    backgroundColor: '#4CAF50',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Add to Library
+                </button>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      <div style={{ marginTop: '50px', borderTop: '2px solid #ddd', paddingTop: '30px' }}>
+        <h2>Your Library ({library.length} games) </h2>
+
+        {library.length === 0 ? (
+          <p>No games in your library yet. Search and add some!</p>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+            {library.map(game => (
+              <div key={game.id} style={{
+                border: '1px solid #ddd',
+                borderRadius: '8px',
+                padding: '15px',
+                backgroundColor: '#f9f9f9',
+                color: '#333'
+              }}>
+                {game.background_image && (
+                  <img
+                    src={game.background_image}
+                    alt={game.name}
+                    style={{
+                      width: '100%',
+                      height: '200px',
+                      borderRadius: '5px',
+                      objectFit: 'cover'
+                    }}
+                  />
+                )}
+                <h3>{game.name}</h3>
+                <p>Rating: {game.rating} / 5</p>
+                <p>Released: {game.released}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
     </div>
   )
 }
-
 export default App
