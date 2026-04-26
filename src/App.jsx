@@ -1,11 +1,22 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const API_KEY = import.meta.env.VITE_API_KEY
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [games, setGames] = useState([])
-  const [library, setLibrary] = useState([])
+
+  const [library, setLibrary] = useState(() => {
+    const savedGames = localStorage.getItem('user-game-library')
+    if (savedGames) {
+      return JSON.parse(savedGames)
+    }
+    return []
+  })
+
+  useEffect(() => {
+    localStorage.setItem('user-game-library', JSON.stringify(library))
+  }, [library]);
 
   const handleSearch = async () => {
     if (!searchQuery) return
