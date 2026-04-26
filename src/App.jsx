@@ -44,6 +44,11 @@ function App() {
     console.log('Added to library:', game.name)
   }
 
+  const removeFromLibrary = (gameIdToRemove) => {
+    const updatedLibrary = library.filter((game) => game.id !== gameIdToRemove);
+    setLibrary(updatedLibrary);
+  };
+
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
       <h1>GameLibrary</h1>
@@ -154,6 +159,21 @@ function App() {
                 <h3>{game.name}</h3>
                 <p>Rating: {game.rating} / 5</p>
                 <p>Released: {game.released}</p>
+
+                <button
+                  onClick={() => removeFromLibrary(game.id)}
+                  style={{
+                    marginTop: '10px',
+                    padding: '8px 16px',
+                    backgroundColor: '#ff4444',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Remove
+                </button>
               </div>
             ))}
           </div>
