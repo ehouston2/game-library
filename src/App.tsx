@@ -1,15 +1,29 @@
 import { useEffect, useState } from 'react'
 
+export interface Game {
+  id: number;
+  name: string;
+  background_image: string | null;
+  rating: number;
+  released: string;
+}
+
+export interface RAWGResponse {
+  count: number;
+  results: Game[];
+}
+
+
 const API_KEY = import.meta.env.VITE_API_KEY
 
 function App() {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [games, setGames] = useState([])
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [games, setGames] = useState<Game[]>([])
 
-  const [library, setLibrary] = useState(() => {
+  const [library, setLibrary] = useState<Game[]>(() => {
     const savedGames = localStorage.getItem('user-game-library')
     if (savedGames) {
-      return JSON.parse(savedGames)
+      return JSON.parse(savedGames) as Game[]
     }
     return []
   })
@@ -34,7 +48,7 @@ function App() {
 
   }
 
-  const addToLibrary = (game) => {
+  const addToLibrary = (game: Game) => {
     if (library.find(g => g.id === game.id)) {
       alert('Game already in your library!')
       return
@@ -44,7 +58,7 @@ function App() {
     console.log('Added to library:', game.name)
   }
 
-  const removeFromLibrary = (gameIdToRemove) => {
+  const removeFromLibrary = (gameIdToRemove: number) => {
     const updatedLibrary = library.filter((game) => game.id !== gameIdToRemove);
     setLibrary(updatedLibrary);
   };
