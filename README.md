@@ -1,16 +1,25 @@
-# React + Vite
+# Game Discovery Engine
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A front-end web application for browsing, searching, and curating a personal library of video games. This project interfaces with the RAWG Video Games Database API to fetch real-time game data.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Framework:** React 
+* **Language:** TypeScript (Strict Mode)
+* **Build Tool:** Vite
+* **Data Source:** RAWG API
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Enterprise Type Safety:** Configured with strict TypeScript interfaces for predictable data flow and error prevention.
+* **Defensive Architecture:** Implements comprehensive network lifecycle states (`isLoading`, `error`) to protect the UI during asynchronous API calls.
+* **Local Caching:** Utilizes `localStorage` to persist the user's custom game library across browser sessions.
+* **Responsive Grid:** (Upcoming) Dynamic CSS layout for rendering high-quality game cover art and metadata.
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+To run this project locally, clone the repository and run the following commands:
+
+1. Install the dependencies:
+   ```bash
+   npm install
