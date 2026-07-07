@@ -28,6 +28,27 @@ function App() {
     return []
   })
 
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const fetchGamesData = async () => {
+    // 1. Reset our states before the network call starts
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Thursday's goal: The actual live fetch request will go here!
+      console.log("Network request initiated...");
+
+    } catch (err) {
+      // 2. Catch any network or server failures safely
+      setError("Failed to fetch games. Please try again later.");
+    } finally {
+      // 3. Turn off the loading spinner no matter what (success or failure)
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     localStorage.setItem('user-game-library', JSON.stringify(library))
   }, [library]);
