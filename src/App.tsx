@@ -32,13 +32,19 @@ function App() {
   const [error, setError] = useState<string | null>(null)
 
   const fetchGamesData = async () => {
-    // 1. Reset our states before the network call starts
+
     setIsLoading(true);
     setError(null);
 
     try {
-      // Thursday's goal: The actual live fetch request will go here!
-      console.log("Network request initiated...");
+      const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data: RAWGResponse = await response.json();
+      setGames(data.results);
 
     } catch (err) {
       // 2. Catch any network or server failures safely
@@ -48,6 +54,10 @@ function App() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchGamesData();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('user-game-library', JSON.stringify(library))
@@ -87,6 +97,18 @@ function App() {
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
       <h1>GameLibrary</h1>
+
+      {error && (
+        <div style={{ padding: '10px', backgroundColor: '#fee', color: '#c00', border: '1px solid #c00', borderRadius: '5px', marginBottom: '20px' }}>
+          {error}
+        </div>
+      )}
+
+      {isLoading && (
+        <div style={{ fontSize: '18px', fontStyle: 'italic', marginBottom: '20px' }}>
+          Loading games...
+        </div>
+      )}
 
       <div style={{ marginBottom: '30px' }}>
         <input
